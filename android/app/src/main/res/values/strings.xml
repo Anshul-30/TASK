@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LIST</string>
+    <string name="facebook_app_id">1673084063036621</string>
+<string name="fb_login_protocol_scheme">fb1673084063036621</string>
+<string name="facebook_client_token">3d7f9ace95ae13624215af78dd8bcd04</string>
+
+</resources>
