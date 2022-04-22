@@ -1,4 +1,4 @@
-package com.list;
+package com.anshul;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

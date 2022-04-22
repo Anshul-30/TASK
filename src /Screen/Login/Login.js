@@ -9,6 +9,7 @@ import LoginStyle from '../../styles/LoginStyle'
 import Modal from 'react-native-modal'
 import { LoginManager, GraphRequest, GraphRequestManager } from "react-native-fbsdk";
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
+// import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
 
 export default function Login({ navigation }) {
   const dispatch = useDispatch()
@@ -20,31 +21,37 @@ export default function Login({ navigation }) {
 
   useEffect(() => {
     GoogleSignin.configure()
-  }, [])
+}, [])
 
-  const googleLogin = async () => {
+const googleLogin = async () => {
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      console.log("user info", userInfo)
-      const data = userInfo?.user
-      console.log("data", data)
-      dispatch(Login1(data))
+        await GoogleSignin.hasPlayServices();
+        const userInfo = await GoogleSignin.signIn();
+        console.log("userInfo", userInfo)
+        // const email = userInfo.user.email;
+        // const userId = userInfo.user.id;
+        // const data = { email, userId }
+        // actions.login(data)
 
+        const data = userInfo?.user
+        dispatch(Login1(data))
+        // this.setState({ userInfo });
+    } catch (error) {
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // user cancelled the login flow
+            console.log("error", error)
+        } else if (error.code === statusCodes.IN_PROGRESS) {
+            // operation (e.g. sign in) is in progress already
+            console.log("error", error)
+        } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+            // play services not available or outdated
+            console.log("error", error)
+        } else {
+            // some other error happened
+            console.log("error", error)
+        }
     }
-    catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log("error4 raise", error)
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-
-        console.log("error3 raise", error)
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log("error2 raise", error)
-      } else {
-        console.log("error1 raise", error)
-      }
-    }
-  };
+};
   // ------------Regex---------
   const fbLogIn = (resCallBack) => {
     LoginManager.logOut();
