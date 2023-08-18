@@ -1,4 +1,44 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import axios from "axios";
+export const apiReq = (url, method, header, data) => {
+  return new Promise((resolve, reject) => {
+    console.log('data sending>>>>',data)
+    axios({
+      url: url,
+      method: method,
+      data: data,
+      header: header,
+    })
+      .then((response) => {
+        console.log('successresp>>>',successresp)
+        return resolve(response);
+      })
+      .catch((error) => {
+        console.log(error,'erorr')
+        return reject(error);
+      });
+  });
+};
+
+//common post api
+
+export const apipost = (url, data, header={}) => {
+  return apiReq(url, "POST", header, data);
+};
+//COMMON GET API
+
+export const apiGet = (url, header) => {
+  return apiReq(url, "GET", header);
+};
+
+
+
+
+
+
+
+
 //  ------------------set and get data in async--------------------------
 
 export const setData = async (data) => {

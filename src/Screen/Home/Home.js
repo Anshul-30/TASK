@@ -3,7 +3,7 @@ import React from 'react'
 import { Image, Text, TouchableOpacity, View, FlatList } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler'
 import { useDispatch, useSelector } from 'react-redux'
-import images from '../../constatnts/imagepath'
+import images, { imagePath } from '../../constatnts/imagepath'
 import strings from '../../constatnts/lang'
 import navigationString from '../../navigation/navigationString'
 import { Logout } from '../../redux/action/auth'
@@ -126,7 +126,7 @@ export default function Home({ navigation }) {
 
       <View>
         <TouchableOpacity onPress={() => navigation.navigate(navigationString.TASK)} style={HomeStyle.touch}>
-          <Image source={images.plus} style={HomeStyle.img} />
+          <Image source={imagePath.plus} style={HomeStyle.img} />
         </TouchableOpacity>
       </View>
 

@@ -10,7 +10,7 @@ export default {
     LOGOUT:"Logout",
     SETTINGS:"Settings",
     EDIT:"Edit",
-    ENTER_PHONE_NUMBER:"enter phone number",
+    ENTER_PHONE_NUMBER:"Enter Phone Number",
     ENTER_EMAIL:"Enter Email",
     NAME:"Name",
     AGE:"Age",
@@ -20,5 +20,12 @@ export default {
     ADDRESS:"Address",
     ENTER_STRONG_PASSWORD:'Enter Strong Password',
     ENTER_VALID_EMAIL:"Enter Valid Email",
-    EMAIL_CANT_BE_EMPTY:"Email can not be empty"
+    EMAIL_CANT_BE_EMPTY:"Email can not be empty",
+    WELCOME:'Welcome',
+    We_are_Happy:'We are happy to see. You can login to continue.',
+    SIGNUP:'Signup',
+    ENTER_FIRST_NAME:'Enter First Name',
+    ENTER_LAST_NAME:'Enter Last Name',
+    Create_a_new_account:'Create a new account',
+    Create_an_account_so_you_can_continue:"Create an account so you can continue.",
 }

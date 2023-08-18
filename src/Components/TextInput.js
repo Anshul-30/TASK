@@ -1,6 +1,7 @@
 import React from "react"
 import { TextInput, View, Image, StyleSheet, Text } from 'react-native'
 import { moderateScale, moderateScaleVertical } from "../styles/responsiveSize"
+import colors from "../styles/colors"
 
 const TextInputComponent = ({
 
@@ -13,16 +14,9 @@ const TextInputComponent = ({
 
 }) => {
     return (
-        <>
             <View style={style.container}>
-
-                <View>
-                    <TextInput secureTextEntry={securetext} value={value} placeholder={placeholder} placeholderTextColor='black' onChangeText={onChangeText} style={{padding:7,color:'black'}} keyboardType={keyboardType}/>
-                </View>
-
+                    <TextInput secureTextEntry={securetext} value={value} placeholder={placeholder} placeholderTextColor={colors.whiteOpacity50} onChangeText={onChangeText} style={{padding:7,color:colors.white}} keyboardType={keyboardType}/>
             </View>
-
-        </>
     )
 }
 export default TextInputComponent
@@ -31,11 +25,10 @@ export default TextInputComponent
 const style = StyleSheet.create({
     container: {
         // flexDirection: 'row',
-        marginHorizontal: 10,
-        // padding: 10,
-        height:35,
+        padding: 6,
         borderRadius: 5,
-        borderWidth: 1,
+        borderWidth:0.5,
+        borderColor:colors.greyA,
         marginVertical: moderateScaleVertical(10)
     },
     img: {

@@ -4,13 +4,15 @@ import { Provider } from 'react-redux';
 
 import { StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native';
-import { getLogin,getData } from './src /utils/utils';
-import type from './src /redux/type';
+import { getLogin,getData } from './src/utils/utils';
+import type from './src/redux/type';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import string from './src /constatnts/lang';
-import { requestUserPermission, notificationListener } from './src /utils/notificationSdervice';
-import Route from './src /navigation/Route';
-import store from './src /store';
+import string from './src/constatnts/lang';
+import { requestUserPermission, notificationListener } from './src/utils/notificationSdervice';
+import Route from './src/navigation/Route';
+import store from './src/store';
+import FlashMessage from 'react-native-flash-message';
+import colors from './src/styles/colors';
 
 const { dispatch } = store;
 
@@ -61,7 +63,7 @@ const App = () => {
           <Route/>
 
         </Provider>
-
+        <FlashMessage style={{backgroundColor:colors.redB}} position="top" />
       </SafeAreaView>
 
 
