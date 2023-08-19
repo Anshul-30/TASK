@@ -24,6 +24,7 @@
     "react-native-fbsdk": "^3.0.0",
     "react-native-flash-message": "^0.2.1",
     "react-native-gesture-handler": "^2.4.0",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-localization": "^2.3.1",
     "react-native-modal": "^13.0.1",
     "react-native-phone-number-input": "^2.1.0",

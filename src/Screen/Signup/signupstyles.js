@@ -1,9 +1,8 @@
-import { StyleSheet } from "react-native";
-import {
-  moderateScale,
-  moderateVerticalScale,
-} from "react-native-size-matters";
-import colors from "../../styles/colors";
+import {StyleSheet} from 'react-native';
+import {moderateScale, moderateVerticalScale} from 'react-native-size-matters';
+import colors from '../../styles/colors';
+import fontfamily from '../../styles/fontfamily';
+import {textScale} from '../../styles/responsiveSize';
 
 export const signupstyles = StyleSheet.create({
   btncontainer: {
@@ -31,16 +30,27 @@ export const signupstyles = StyleSheet.create({
     flex: 2,
   },
   names: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: moderateScale(16),
   },
   fname: {
     flex: 1,
-    marginRight:moderateScale(5)
+    marginRight: moderateScale(5),
   },
   lname: {
     flex: 1,
-    marginLeft:moderateScale(5)
+    marginLeft: moderateScale(5),
   },
-  mobilecode: { flex: 0.3 },
+  mobilecode: {flex: 0.3},
+  alreadyhaveaccount: {
+    color: colors.INPUT_TEXT,
+    marginRight: moderateScale(6),
+    fontFamily: fontfamily.MulishSemiBold,
+    fontSize: textScale(16),
+  },
+  login: {
+    color: colors.LIGHT_BLUE,
+    fontFamily: fontfamily.MulishBold,
+    fontSize: textScale(16),
+  },
 });

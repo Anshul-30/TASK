@@ -17,14 +17,10 @@ const userState = (state = initialState, action) => {
                 }
 
             }
-
-        // case type.LOGIN: return state = true;
         case type.LOGOUT:
             removelogin()
-
-
             return {
-                userdata: undefined
+                userdata: ''
             }
         
           

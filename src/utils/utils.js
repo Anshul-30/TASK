@@ -11,7 +11,7 @@ export const apiReq = (url, method, header, data) => {
       header: header,
     })
       .then((response) => {
-        console.log('successresp>>>',successresp)
+        console.log('successresp>>>',response)
         return resolve(response);
       })
       .catch((error) => {

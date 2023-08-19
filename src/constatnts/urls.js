@@ -1,4 +1,4 @@
 export default{
-    LOGIN:'http://localhost:3000/login',
-    SIGNUP:'http://localhost:3000/signup'
+    LOGIN:'http://192.168.1.6:3000/login',
+    SIGNUP:'http://192.168.1.6:3000/signup'
 }

@@ -59,11 +59,8 @@ export default function Home({ navigation }) {
   }
   const signOut = async () => {
     try {
-      await GoogleSignin.signOut();
-      // this.setState({ user: null }); // Remember to remove the user from your app's state as well
       dispatch(Logout())
     } catch (error) {
-      console.error(error);
     }
   };
   return (

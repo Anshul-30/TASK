@@ -1,5 +1,5 @@
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { CardStyleInterpolators, createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 import AuthStack from "./AuthStack";
 import MainStack from "./MainStack";
@@ -13,7 +13,7 @@ export default function route() {
     const userStatus = useSelector(state => state.userState.userdata);
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Navigator screenOptions={{ headerShown: false,cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS }}>
                 {userStatus  ? HomeStack(Stack) : AuthStack(Stack)}
             </Stack.Navigator>
         </NavigationContainer>
