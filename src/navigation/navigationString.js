@@ -4,5 +4,8 @@ export default{
     HOME:'home',
     TASK:'task',
     MAIN:'main',
-    SETTING:'setting'
+    SETTING:'setting',
+    PROFILE:'profile',
+    PROFILESTACK:"ProfileStack",
+    TABROUTES:'TabRoutes'
 }

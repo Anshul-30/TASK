@@ -8,9 +8,13 @@ export const imagePath= {
   edit: {
     uri: 'https://www.freeiconspng.com/thumbs/edit-icon-png/edit-icon-png-24.png',
   },
-  googlelogo: require('../assets/images/ic_google.png'),
-  facebooklogo: require('../assets/images/ic_facebook.png'),
+  
   delete1: {
     uri: 'https://image.shutterstock.com/image-vector/delete-icongarbage-trash-can-rubbish-260nw-1211550652.jpg',
   },
+  googlelogo: require('../assets/images/ic_google.png'),
+  facebooklogo: require('../assets/images/ic_facebook.png'),
+  ic_home:require('../assets/images/ic_home.png'),
+  ic_user:require('../assets/images/ic_user.png'),
+  ic_cross:require('../assets/images/ic_cross.png')
 };

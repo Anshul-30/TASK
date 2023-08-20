@@ -21,48 +21,49 @@ import {
   KeyboardAwareScrollView,
   KeyboardAwareSectionList,
 } from 'react-native-keyboard-aware-scroll-view';
-import { useDispatch } from 'react-redux';
-import { Login1 } from '../../redux/action/auth';
+import {useDispatch} from 'react-redux';
+import {Login1} from '../../redux/action/auth';
 import navigationString from '../../navigation/navigationString';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
+import {fbLogin, googleLogin, onFBlogIn} from '../../utils/utils';
 const Signup = ({navigation}) => {
   const [FirstName, setFirstName] = useState('');
   const [LastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
   function validate() {
     const emailRegex =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!FirstName.trim()) {
       showMessage({
         message: 'Please Enter Your First Name',
-        type: 'default',
+        type: 'warning',
       });
       return;
     } else if (!LastName.trim()) {
       showMessage({
         message: 'Please Enter Your Last Name',
-        type: 'default',
+        type: 'warning',
       });
       return;
     } else if (!email.trim()) {
       showMessage({
         message: 'Please Enter Your Email',
-        type: 'default',
+        type: 'warning',
       });
       return;
     } else if (!email.match(emailRegex)) {
       showMessage({
         message: 'Please Enter a Valid Email',
-        type: 'default',
+        type: 'warning',
       });
       return;
     } else if (!mobile.trim()) {
       showMessage({
         message: 'Please Enter Your Mobile number',
-        type: 'default',
+        type: 'warning',
       });
       return;
     } else if (!password.trim()) {
@@ -82,8 +83,7 @@ const Signup = ({navigation}) => {
       SignupApi(signupdata, {})
         .then(res => {
           console.log(res, 'apirespppp');
-          dispatch(Login1(res?.data?.data))
-          
+          dispatch(Login1(res?.data?.data));
         })
         .catch(error => {
           showMessage({
@@ -93,10 +93,35 @@ const Signup = ({navigation}) => {
         });
     }
   }
+
+  const onpressgoogle = () => {
+    googleLogin().then(res => {
+      dispatch(Login1(res));
+    }).catch((error)=>{
+      showMessage({
+        message: error,
+        type: 'danger',
+      })
+    })
+  };
+
+  const openFacebookLogin = () => {
+    fbLogin(_responseInfoCallback);
+  };
+  const _responseInfoCallback = (error, result) => {
+      if (result && result?.id) {
+        dispatch(Login1(result))
+      } if(error){
+        showMessage({
+          message:error,
+          type:'danger'
+        })
+      }
+  };
   return (
     <View style={{...signupstyles.container}}>
       <ScrollView>
-        <View style={{flex: 0.9, marginTop: moderateScaleVertical(56)}}>
+        <View style={{flex: 0.9, marginTop: moderateScaleVertical(36)}}>
           <Text style={signupstyles.createnew}>
             {strings.Create_a_new_account}
           </Text>
@@ -145,11 +170,19 @@ const Signup = ({navigation}) => {
               securetext={true}
             />
           </View>
-          <View style={{flexDirection:'row',justifyContent:'center',marginTop:moderateScaleVertical(16)}}>
-          <Text style={signupstyles.alreadyhaveaccount}>Already have an account? </Text>
-<TouchableOpacity onPress={()=>navigation.navigate(navigationString.LOGIN)}>
-  <Text style={signupstyles.login}>{strings.LOGIN}</Text>
-</TouchableOpacity>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginTop: moderateScaleVertical(16),
+            }}>
+            <Text style={signupstyles.alreadyhaveaccount}>
+              Already have an account?{' '}
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate(navigationString.LOGIN)}>
+              <Text style={signupstyles.login}>{strings.LOGIN}</Text>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={{}}>
@@ -158,6 +191,20 @@ const Signup = ({navigation}) => {
             containerstyle={{backgroundColor: 'red'}}
             title={strings.SIGNUP}
             onPress={validate}
+          />
+          <Buttoncomp
+            btntextstyle={{color: colors.redB}}
+            containerstyle={{backgroundColor: colors.white}}
+            title={strings.SIGN_IN_WITH_GOOGLE}
+            onPress={onpressgoogle}
+            logoimg={imagePath.googlelogo}
+          />
+          <Buttoncomp
+            btntextstyle={{color: colors.redB}}
+            containerstyle={{backgroundColor: colors.white}}
+            title={strings.SIGN_IN_WITH_FACEBOOK}
+            onPress={openFacebookLogin}
+            logoimg={imagePath.facebooklogo}
           />
         </View>
       </ScrollView>

@@ -13,6 +13,7 @@ import Route from './src/navigation/Route';
 import store from './src/store';
 import FlashMessage from 'react-native-flash-message';
 import colors from './src/styles/colors';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 const { dispatch } = store;
 
@@ -30,6 +31,7 @@ const App = () => {
       })
     })
 
+ 
     getData().then((res) => {
       console.log("res", res);
       if (!!res) {
@@ -42,7 +44,6 @@ const App = () => {
 
     })
   }, [])
-
   const getlng = async () => {
     let lng = await AsyncStorage.getItem("language")
     console.log("lng ----", lng)
@@ -63,7 +64,7 @@ const App = () => {
           <Route/>
 
         </Provider>
-        <FlashMessage style={{backgroundColor:colors.redB}} position="top" />
+        <FlashMessage position="top" />
       </SafeAreaView>
 
 

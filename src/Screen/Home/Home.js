@@ -1,142 +1,182 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
-import React from 'react'
-import { Image, Text, TouchableOpacity, View, FlatList } from 'react-native'
-import { ScrollView } from 'react-native-gesture-handler'
-import { useDispatch, useSelector } from 'react-redux'
-import images, { imagePath } from '../../constatnts/imagepath'
-import strings from '../../constatnts/lang'
-import navigationString from '../../navigation/navigationString'
-import { Logout } from '../../redux/action/auth'
-import { DeleteData } from '../../redux/action/details'
-import HomeStyle from '../../styles/HomeStyle'
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+  Image,
+  Text,
+  TouchableOpacity,
+  View,
+  FlatList,
+  Modal,
+} from 'react-native';
 
+import {useSelector} from 'react-redux';
+import {imagePath} from '../../constatnts/imagepath';
+import strings from '../../constatnts/lang';
+import HomeStyle from '../../styles/HomeStyle';
+import WrapperContainer from '../../Components/WrapperContainer';
+import {
+  AddNewTask,
+  AllTask,
+  DeleteAllTasks,
+  DeleteTask,
+} from '../../redux/action/taskapis';
+import colors from '../../styles/colors';
+import Buttoncomp from '../../Components/Buttoncomp';
+import {moderateScale} from 'react-native-size-matters';
+import {moderateScaleVertical, textScale} from '../../styles/responsiveSize';
+import {showMessage} from 'react-native-flash-message';
+import TextInputComponent from '../../Components/TextInput';
 
+export const Home = ({navigation}) => {
+  const userdata = useSelector(state => state.userState.userdata);
+  const [alltask, setAlltask] = useState([]);
+  const [task, setTask] = useState();
+  const [ismodalvisible, setismodalvisible] = useState(false);
+  console.log(userdata?._id);
+  useEffect(() => {
+    getalltask();
+  }, []);
 
-export default function Home({ navigation }) {
-  const dispatch = useDispatch()
-  const list = useSelector((state) => state.dataInput.list)
-  // console.log(list)
+  const getalltask = useCallback(() => {
+    AllTask(userdata?._id, {}).then(res => {
+      setAlltask(res?.data);
+    }),
+      [alltask];
+  });
+  const deletetask = item => {
+    console.log(item, 'itemm');
+    const query = item?._id;
+    DeleteTask(query)
+      .then(res => {
+        showMessage({
+          message: res?.data?.message,
+          type: 'success',
+        });
+        getalltask();
+      })
+      .catch(error => {
+        showMessage({
+          message: error?.message || error?.response?.data?.message,
+          type: 'danger',
+        });
+      });
+  };
 
-  // setData(list)
-
-  const Edit = (data) => {
-    // console.log(data, "index", index)
-    navigation.navigate(navigationString.TASK, { props: data })
-  }
-  const RenderItem = ({item, index }) => {
-    const element = item
+  const addtask = () => {
+    const taskdata = {task: task, userId: userdata?._id};
+    AddNewTask(taskdata).then(res => {
+      showMessage({
+        message: res?.data?.message,
+        type: 'success',
+      });
+      setTask('');
+      setismodalvisible(false);
+      getalltask();
+    });
+  };
+  console.log(alltask, 'alltask');
+  const RenderItem = ({item, index}) => {
     return (
-      <View style={{
-        shadowOpacity: .5, shadowOffset: { height: 2, width: -2 }, elevation: 7, backgroundColor: 'white', flexDirection: 'row', borderRadius: 5, justifyContent: 'space-between',
-        margin: 7
-      }} key={index}>
-        <View style={{ margin: 10 }}>
-          <Text style={HomeStyle.text1}>{strings.NAME}: {element.name}
-          </Text>
-          <Text style={HomeStyle.text1}>{strings.AGE} : {element.age}
-          </Text>
-          <Text style={HomeStyle.text1}>{strings.ROLLNO} : {element.rollno}
-          </Text>
-          <Text style={HomeStyle.text1}>{strings.PHONE_NUMBER} : {element.phone}
-          </Text>
-          <Text style={HomeStyle.text1}>{strings.ADDRESS} : {element.address}
-          </Text>
-        </View>
-        <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-
-          <TouchableOpacity style={{ margin: 10 }} onPress={() => dispatch(DeleteData(element.userId))}>
-            <Image source={images.delete1} style={{ height: 35, width: 35 }} />
-          </TouchableOpacity>
-
-
-          <TouchableOpacity style={{ margin: 10 }} onPress={() => Edit(element, index)}>
-            <Image source={images.edit} style={{ height: 30, width: 30 }} />
-          </TouchableOpacity>
-        </View>
+      <View style={HomeStyle.taskcontainer}>
+        <Text style={{color: colors.white, fontSize: textScale(16)}}>
+          {index + 1} : {item?.task}
+        </Text>
+        <TouchableOpacity onPress={() => deletetask(item)}>
+          <Image source={imagePath.ic_cross} />
+        </TouchableOpacity>
       </View>
-
-    )
-  }
-  const signOut = async () => {
-    try {
-      dispatch(Logout())
-    } catch (error) {
-    }
+    );
+  };
+  const taskheader = () => (
+    <View style={{marginTop: moderateScale(12)}}>
+      <Text style={HomeStyle.mytask}>My Tasks</Text>
+    </View>
+  );
+  const deleteAll = () => {
+    DeleteAllTasks(userdata?._id,{})
+      .then(res => {
+        showMessage({
+          message: res?.data?.message,
+          type:'success'
+        });
+        getalltask()
+      })
+      .catch(error => {
+        showMessage({
+          message: error?.message || error?.response?.data?.message,
+          type:'danger'
+        });
+      });
   };
   return (
-
-
-    <View style={{ position: 'relative', flex: 1 }}>
-      <View style={HomeStyle.logout}>
-        <Text style={HomeStyle.text}>{strings.HOME}</Text>
-        <TouchableOpacity onPress={() => navigation.navigate(navigationString.SETTING)}>
-          <Text style={HomeStyle.text}>{strings.SETTINGS}</Text>
-
-        </TouchableOpacity>
-        <TouchableOpacity onPress={signOut}>
-          <Text style={HomeStyle.logouttext}>{strings.LOGOUT}</Text>
-
-        </TouchableOpacity>
-      </View>
-      <FlatList
-        data={list}
-        renderItem={RenderItem}
-      />
-      {/* <ScrollView>
-        {
-          list.map((element, index) => {
-            return (
-
-                <View style={{
-                  shadowOpacity: .5, shadowOffset: { height: 2, width: -2 }, elevation: 7, backgroundColor: 'white', flexDirection: 'row', borderRadius: 5, justifyContent: 'space-between',
-                  margin: 7
-                }} key={index}>
-                  <View style={{ margin: 10 }}>
-                    <Text style={HomeStyle.text1}>{strings.NAME}: {element.name}
-                    </Text>
-                    <Text style={HomeStyle.text1}>{strings.AGE} : {element.age}
-                    </Text>
-                    <Text style={HomeStyle.text1}>{strings.ROLLNO} : {element.rollno}
-                    </Text>
-                    <Text style={HomeStyle.text1}>{strings.PHONE_NUMBER} : {element.phone}
-                    </Text>
-                    <Text style={HomeStyle.text1}>{strings.ADDRESS} : {element.address}
-                    </Text>
-                  </View>
-                  <View style={{ flexDirection: 'column', justifyContent: 'space-between' }}>
-
-                    <TouchableOpacity style={{ margin: 10 }} onPress={() => dispatch(DeleteData(element.userId))}>
-                      <Image source={images.delete1} style={{ height: 35, width: 35 }} />
-                    </TouchableOpacity>
-
-
-                    <TouchableOpacity style={{ margin: 10 }} onPress={() => Edit(element, index)}>
-                      <Image source={images.edit} style={{ height: 30, width: 30 }} />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-
-            )
-          })
-        }
-      </ScrollView> */}
-
-      <View>
-        <TouchableOpacity onPress={() => navigation.navigate(navigationString.TASK)} style={HomeStyle.touch}>
-          <Image source={imagePath.plus} style={HomeStyle.img} />
-        </TouchableOpacity>
+    <WrapperContainer>
+      <View style={{flex: 1}}>
+        <Text style={HomeStyle.header}>To Do List</Text>
+        <View style={HomeStyle.topaddbtn}>
+          <Buttoncomp
+            btntextstyle={{color: colors.white}}
+            containerstyle={{
+              backgroundColor: colors.green,
+              marginRight: moderateScale(10),
+            }}
+            title={strings.ADD}
+            onPress={() => setismodalvisible(true)}
+          />
+          <Buttoncomp
+            btntextstyle={{color: colors.white}}
+            containerstyle={{backgroundColor: colors.redB}}
+            title={strings.DELETE_ALL}
+            onPress={deleteAll}
+          />
+        </View>
+        <FlatList
+          data={alltask || []}
+          ListHeaderComponent={taskheader}
+          renderItem={RenderItem}
+        />
       </View>
 
-
-
-
-    </View>
-
-
-
-
-
-
-
-  )
-}
+      <Modal animationType={'slide'} visible={ismodalvisible}>
+        <WrapperContainer>
+          <View>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                borderBottomWidth: 1,
+                borderBottomColor: colors.INPUT_TEXT,
+                padding: moderateScale(12),
+              }}>
+              <Text style={{color: colors.redB, fontSize: textScale(28)}}>
+                Add Task
+              </Text>
+              <TouchableOpacity
+                style={{}}
+                onPress={() => setismodalvisible(false)}>
+                <Image
+                  style={{
+                    height: moderateScaleVertical(40),
+                    width: moderateScale(40),
+                  }}
+                  source={imagePath.ic_cross}
+                />
+              </TouchableOpacity>
+            </View>
+            <View style={{marginTop: moderateScaleVertical(40)}}>
+              <TextInputComponent
+                placeholder={strings.WRITE_YOUR_TASK_HERE}
+                value={task}
+                onChangeText={value => setTask(value)}
+              />
+              <Buttoncomp
+                title="Add Task"
+                containerstyle={{backgroundColor: colors.redB}}
+                btntextstyle={{color: colors.white}}
+                onPress={() => addtask()}
+              />
+            </View>
+          </View>
+        </WrapperContainer>
+      </Modal>
+    </WrapperContainer>
+  );
+};

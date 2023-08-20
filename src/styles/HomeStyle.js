@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from 'react-native'
-import { moderateScale, textScale } from "./responsiveSize";
+import { moderateScale, moderateScaleVertical, textScale } from "./responsiveSize";
 import colors from "./colors";
 import fontfamily from './fontfamily'
 
@@ -14,7 +14,7 @@ const HomeStyle = StyleSheet.create({
     touch: {
         position: 'absolute',
         right: 30,
-        bottom: 30,
+        bottom: 100,
         // top:200,
         height:moderateScale(30),
         width:moderateScale(30),
@@ -23,29 +23,30 @@ const HomeStyle = StyleSheet.create({
         justifyContent:'center',
         backgroundColor:'lightgreen'
     },
-    text: {
-        color:colors.blackB,
+    header: {
+        color:colors.redB,
         fontFamily:fontfamily.MulishBold,
-        fontSize: textScale(16),
-        // fontWeight: '600',
-        // margin: 15
+        fontSize:textScale(24),
+        textAlign:'center',
+        padding:moderateScale(12),
+        fontWeight:'bold'
     },
-    logouttext: {
-        color: 'tomato',
-        fontSize: textScale(16),
-        // fontWeight: '600',
-        // margin: 15
-    },
-    logout:{
-        // flex:1,
+    topaddbtn:{
         flexDirection:'row',
-        margin:10,
-        justifyContent:'space-between'
     },
-    text1:{
-        padding:3,
-        color:colors.black,
-        fontSize:textScale(14)
+    mytask:{
+        color:colors.redB,
+        fontFamily:fontfamily.MulishSemiBold,
+        fontSize:textScale(18),
+        textAlign:'center',
+        fontWeight:'bold',
+        textDecorationLine:'underline',
+        marginVertical:moderateScaleVertical(12)
+    },
+    taskcontainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        paddingVertical:moderateScaleVertical(4)
     }
 })
 export default HomeStyle

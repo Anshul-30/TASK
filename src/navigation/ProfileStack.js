@@ -1,16 +1,15 @@
 import React from 'react'
-import AddTask from '../Screen/Task/AddTask'
 import navigationString from './navigationString'
 import { createStackNavigator } from '@react-navigation/stack'
-import { Home } from '../Screen/Home/Home'
+import Profile from '../Screen/Profile/Profile'
+
 const Stack = createStackNavigator()
-export default function MainStack() {
+export const ProfileStack=()=> {
   return (
     <>
     <Stack.Navigator screenOptions={{headerShown:false}}>
 
-      <Stack.Screen name={navigationString.HOME} component={Home} />
-      <Stack.Screen name={navigationString.TASK} component={AddTask} />
+      <Stack.Screen name={navigationString.PROFILE} component={Profile} />
 
     </Stack.Navigator>
     </>

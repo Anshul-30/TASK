@@ -1,9 +1,9 @@
-import urls from "../../constatnts/urls";
+import { LOGIN, SIGNUP } from "../../constatnts/urls";
 import { apipost } from "../../utils/utils";
 
 export const LoginApi = (data, header) => {
     return new Promise((resolve, reject) => {
-      apipost(urls.LOGIN, data, header)
+      apipost(LOGIN, data, header)
         .then((res) => {
           return resolve(res);
         })
@@ -16,7 +16,7 @@ export const LoginApi = (data, header) => {
   export const SignupApi = ( data, header) => {
     return new Promise((resolve, reject) => {
         console.log(data,'datattata')
-      apipost(urls.SIGNUP, data, header)
+      apipost(SIGNUP, data, header)
         .then((res) => {
           return resolve(res);
         })

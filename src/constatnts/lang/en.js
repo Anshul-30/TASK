@@ -28,4 +28,11 @@ export default {
     ENTER_LAST_NAME:'Enter Last Name',
     Create_a_new_account:'Create a new account',
     Create_an_account_so_you_can_continue:"Create an account so you can continue.",
+    SIGN_IN_WITH_GOOGLE:'Sign Up With Google',
+    SIGN_IN_WITH_FACEBOOK:'Sign Up With Facebook',
+    SIGNOUT:'Signout',
+    ADD:'Add Task',
+    DELETE_ALL:'Delete All',
+    WRITE_YOUR_TASK_HERE:'Ener your task here'
+    
 }

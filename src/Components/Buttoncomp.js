@@ -23,6 +23,8 @@ const styles = StyleSheet.create({
       flexDirection: "row",
       paddingHorizontal: moderateScale(16),
       marginTop: moderateScale(16),
+      flexGrow:1,
+      height:moderateVerticalScale(46)
     },
     btntext: {
       color: colors.BLACK_TXT,

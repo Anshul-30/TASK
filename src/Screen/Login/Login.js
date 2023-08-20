@@ -34,101 +34,10 @@ import {showMessage} from 'react-native-flash-message';
 import { LoginApi } from '../../redux/action/authapi';
 // import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin'
 
-export default function Login({navigation}) {
+export const Login=({navigation})=>{
   const dispatch = useDispatch();
   const [pass, setPass] = useState('');
   const [email, setEmail] = useState('');
-
-  // useEffect(() => {
-  //   GoogleSignin.configure();
-  // }, []);
-
-  // const googleLogin = async () => {
-  //   try {
-  //     await GoogleSignin.hasPlayServices();
-  //     const userInfo = await GoogleSignin.signIn();
-  //     console.log('userInfo', userInfo);
-  //     // const email = userInfo.user.email;
-  //     // const userId = userInfo.user.id;
-  //     // const data = { email, userId }
-  //     // actions.login(data)
-
-  //     const data = userInfo?.user;
-  //     dispatch(Login1(data));
-  //     // this.setState({ userInfo });
-  //   } catch (error) {
-  //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-  //       // user cancelled the login flow
-  //       console.log('error', error);
-  //     } else if (error.code === statusCodes.IN_PROGRESS) {
-  //       // operation (e.g. sign in) is in progress already
-  //       console.log('error', error);
-  //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-  //       // play services not available or outdated
-  //       console.log('error', error);
-  //     } else {
-  //       // some other error happened
-  //       console.log('error', error);
-  //     }
-  //   }
-  // };
-  // ------------Regex---------
-  // const fbLogIn = resCallBack => {
-  //   LoginManager.logOut();
-  //   return LoginManager.logInWithPermissions(['email', 'public_profile']).then(
-  //     result => {
-  //       console.log('fb result ****************', result);
-  //       if (
-  //         result.declinedPermissions &&
-  //         result.declinedPermissions.includes('email')
-  //       ) {
-  //         resCallBack({message: 'Email is required'});
-  //       }
-  //       if (result.isCancelled) {
-  //         console.log('dxcfgvbhjn');
-  //       } else {
-  //         const infoRequest = new GraphRequest(
-  //           'me?fields= email,name, picture',
-  //           null,
-  //           resCallBack,
-  //         );
-  //         new GraphRequestManager().addRequest(infoRequest).start();
-  //       }
-  //     },
-  //     function (errror) {
-  //       console.log('login failed', errror);
-  //     },
-  //   );
-  // };
-
-  // const _resInfoCallback = async (error, result) => {
-  //   if (error) {
-  //     console.log('error raised at response', error);
-  //     return;
-  //   } else {
-  //     const userData = result;
-  //     console.log('id', userData);
-  //     dispatch(Login1(userData));
-  //   }
-  // };
-  // const onFBlogIn = async () => {
-  //   try {
-  //     await fbLogIn(_resInfoCallback);
-  //     console.log('hii');
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // };
-  // const [isModalVisible, setIsModalVisible] = useState(false);
-
-  // const handleModal = () => setIsModalVisible(() => !isModalVisible);
-
-  // const onchnagelanguge = key => {
-  //   changelanguage(key);
-  //   RNRestart.Restart();
-  // };
-
-  // ----------------validations----------
 
   const login = () => {
     const logindata = {email:email, password:pass};
@@ -136,21 +45,21 @@ export default function Login({navigation}) {
     if (!email) {
       showMessage({
         message: 'Please Enter Your Email',
-        type: 'default',
+        type: 'warning',
       });
       return;
     }
     if (!emailRegex.test(email)) {
       showMessage({
         message: 'Please Enter Valid Email',
-        type: 'default',
+        type: 'warning',
       });
       return;
     }
     if (pass.length<6) {
       showMessage({
         message: 'Password must of minimum 6 digits',
-        type: 'default',
+        type: 'warning',
       });
       return;
     } else {
@@ -163,7 +72,7 @@ export default function Login({navigation}) {
         .catch(error => {
           console.log(error,'erorrr')
           showMessage({
-            message: error?.response?.data?.error            ,
+            message: error?.response?.data?.error || error?.message ,
             type: 'danger',
           });
         });
